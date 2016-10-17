@@ -1,0 +1,14 @@
+<% include header %>
+
+  <h1><%-title %></h1>
+  <p>Welcome to <%-title %></p>
+
+<h3>Showing Data</h3>
+
+<% for(var i=0; i< articles.length; i++){ %>
+
+  <%= articles[i].title %> <br/>
+
+<% } %>
+
+<% include footer %>

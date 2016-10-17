@@ -1,0 +1,44 @@
+Used generator-express to create project
+
+Added knex dependency
+
+Created knexfile.js on root and added development/test database settings
+
+Ran following commands for creating migrations
+knex migrate:make user
+knex migrate:make article
+
+Added db/knex.js for knex database settings
+Added util/encryption.js for encrypting user secret keys
+
+Created controllers:
+    article.js          To handle api requests for article
+
+    /api/articles       GET     -                   Reads all articles
+    /api/articles/id    GET     id                  Read a particular article
+    /api/articles/id    DELETE  id                  Delete a particular article
+    /api/articles       POST    title,url,text      Create a new article
+    /api/articles/id    PUT     title,url,text      Update an existing article
+
+    user.js             To handle user create/login requests
+
+    /users              POST    name,username,password      Create a new user
+    /authenticate       POST    username,password           User login, returns json web token
+
+    static.js           To handle static pages like index, about-us, contact-us etc.
+
+
+Steps:
+    1. Create a new user, a uuid secret key will be stored against user record
+
+    2. User login
+        2.a. Token generated using user secret key
+        2.b. Secret key encrypted and stored in session
+
+    3. Call any /api/** url
+        3.a. Middleware receives token in URL or request body
+        3.b. Middleware reads encrypted user secret from session
+        3.c. Encrypted secret key is then decrypted
+        3.d. Middleware verifies the token with the help of decrypted user secret
+
+    4. If token is verified, the requested resource is processed
